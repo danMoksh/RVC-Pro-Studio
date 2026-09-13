@@ -36,7 +36,7 @@ export const FormantShiftArea = (_props: FormantShiftAreaProps) => {
                                 min="-5"
                                 max="5"
                                 step="0.1"
-                                value={currentFormantShift}
+                                value={typeof currentFormantShift === 'number' && !isNaN(currentFormantShift) ? currentFormantShift : 0}
                                 onChange={(e) => {
                                     formantShiftValueUpdatedAction(Number(e.target.value));
                                 }}
