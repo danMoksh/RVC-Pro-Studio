@@ -25,6 +25,7 @@ from typing import Callable, Any
 
 from voice_changer.RVC.RVCr2 import RVCr2
 from voice_changer.RVC.RVCModelSlotGenerator import RVCModelSlotGenerator  # 起動時にインポートするとパラメータが取れない。
+from voice_changer.DspPreProcessor import DspPreProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -65,6 +66,7 @@ class VoiceChangerManager(ServerAudioCallbacks):
 
         self.vc = VoiceChangerV2(self.settings)
         self.server_audio = ServerAudio(self, self.settings)
+        self.dsp_preprocessor = DspPreProcessor()
 
         logger.info("Initialized.")
 
@@ -136,6 +138,8 @@ class VoiceChangerManager(ServerAudioCallbacks):
         info = self.vc.get_info()
         data.update(info)
 
+        data.update(self.dsp_preprocessor.get_params_dict())
+
         return data
 
     def initialize(self, val: int):
@@ -201,6 +205,22 @@ class VoiceChangerManager(ServerAudioCallbacks):
         return self.get_info()
 
     def change_voice(self, receivedData: AudioInOutFloat) -> tuple[AudioInOutFloat, tuple, tuple | None]:
+        import time
+        # Apply DSP pre-processing before anything else
+        dsp = self.dsp_preprocessor
+        dsp_time = 0.0
+        if dsp.params.enabled:
+            start_dsp = time.time()
+            receivedData = dsp.process(receivedData, self.settings.inputSampleRate)
+            dsp_time = time.time() - start_dsp
+
+            # Pre-process monitor: return DSP output directly, skip RVC
+            if dsp.params.preprocess_monitor:
+                vol = float(np.sqrt(
+                    np.square(receivedData).mean(dtype=np.float32)
+                ))
+                return receivedData, vol, [dsp_time, 0, 0], None
+
         if self.settings.passThrough:  # パススルー
             vol = float(np.sqrt(
                 np.square(receivedData).mean(dtype=np.float32)
@@ -210,6 +230,11 @@ class VoiceChangerManager(ServerAudioCallbacks):
         try:
             with self.device_manager.lock:
                 audio, vol, perf = self.vc.on_request(receivedData)
+            
+            if dsp_time > 0:
+                perf = list(perf)
+                perf[1] += dsp_time
+                
             return audio, vol, perf, None
         except VoiceChangerIsNotSelectedException as e:
             logger.exception(e)

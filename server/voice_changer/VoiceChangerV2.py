@@ -121,6 +121,9 @@ class VoiceChangerV2:
         return self.vcmodel.get_processing_sampling_rate()
 
     def process_audio(self, audio_in: AudioInOutFloat) -> tuple[AudioInOutFloat, float]:
+        if len(audio_in) == 0:
+            return audio_in, 0.0
+
         block_size = audio_in.shape[0]
 
         audio, vol = self.vcmodel.inference(audio_in)
