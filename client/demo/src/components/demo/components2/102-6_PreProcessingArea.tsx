@@ -12,7 +12,6 @@ export type DspParams = {
     dspHighpassCutoff: number;
     dspHighshelfCutoff: number;
     dspHighshelfGain: number;
-    dspFormantShift: number;
     dspCompressorThreshold: number;
     dspCompressorRatio: number;
     dspCompAttack: number;
@@ -29,7 +28,6 @@ const DEFAULT_DSP_PARAMS: DspParams = {
     dspHighpassCutoff: 80,
     dspHighshelfCutoff: 4000,
     dspHighshelfGain: 0,
-    dspFormantShift: 0,
     dspCompressorThreshold: -20,
     dspCompressorRatio: 4,
     dspCompAttack: 5.0,

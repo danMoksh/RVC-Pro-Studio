@@ -28,7 +28,6 @@ class DspPreProcessorParams:
     highpass_cutoff_hz: float = 80.0  # 20 to 300
     highshelf_cutoff_hz: float = 4000.0  # 2000 to 10000
     highshelf_gain_db: float = 0.0  # 0 to +12
-    formant_shift_semitones: float = 0.0  # -12 to +12
     compressor_threshold_db: float = -20.0  # -40 to 0
     compressor_ratio: float = 4.0  # 1 to 20
     comp_attack_ms: float = 5.0    # 1 to 100
@@ -94,7 +93,6 @@ class DspPreProcessor:
                 "dspHighpassCutoff": self._params.highpass_cutoff_hz,
                 "dspHighshelfCutoff": self._params.highshelf_cutoff_hz,
                 "dspHighshelfGain": self._params.highshelf_gain_db,
-                "dspFormantShift": self._params.formant_shift_semitones,
                 "dspCompressorThreshold": self._params.compressor_threshold_db,
                 "dspCompressorRatio": self._params.compressor_ratio,
                 "dspCompAttack": self._params.comp_attack_ms,
@@ -112,7 +110,6 @@ class DspPreProcessor:
             "dspHighpassCutoff": ("highpass_cutoff_hz", float),
             "dspHighshelfCutoff": ("highshelf_cutoff_hz", float),
             "dspHighshelfGain": ("highshelf_gain_db", float),
-            "dspFormantShift": ("formant_shift_semitones", float),
             "dspCompressorThreshold": ("compressor_threshold_db", float),
             "dspCompressorRatio": ("compressor_ratio", float),
             "dspCompAttack": ("comp_attack_ms", float),
