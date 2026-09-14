@@ -213,11 +213,6 @@ class DspPreProcessor:
         if p.compressor_makeup_gain_db > 0.0:
             x = x * (10 ** (p.compressor_makeup_gain_db / 20.0))
 
-        # 6. Formant Shift
-        # Note: Real-time high-quality pitch shift in pure python is too slow for 128-sample chunks.
-        if p.formant_shift_semitones != 0.0:
-            pass 
-
         # Hard Limiter (Ceiling) to prevent digital distortion/clipping
         if p.limiter_enabled:
             x = np.clip(x, -0.99, 0.99)
