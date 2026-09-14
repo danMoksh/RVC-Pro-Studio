@@ -177,7 +177,7 @@ class Pipeline:
         f0_up_key: int,
         formant_shift: float,
         index_rate: float,
-        f0_smoothing: int = 0,
+        f0_smoothing: int,
         audio_feats_len: int,
         silence_front: int,
         embOutputLayer: int,
