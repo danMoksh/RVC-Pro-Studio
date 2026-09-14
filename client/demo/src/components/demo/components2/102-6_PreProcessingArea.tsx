@@ -17,6 +17,7 @@ export type DspParams = {
     dspCompAttack: number;
     dspCompRelease: number;
     dspCompressorMakeupGain: number;
+    dspLimiterEnabled: boolean;
 };
 
 const DEFAULT_DSP_PARAMS: DspParams = {
@@ -33,6 +34,7 @@ const DEFAULT_DSP_PARAMS: DspParams = {
     dspCompAttack: 5.0,
     dspCompRelease: 50.0,
     dspCompressorMakeupGain: 0,
+    dspLimiterEnabled: false,
 };
 
 /**

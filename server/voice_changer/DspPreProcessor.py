@@ -33,6 +33,7 @@ class DspPreProcessorParams:
     comp_attack_ms: float = 5.0    # 1 to 100
     comp_release_ms: float = 50.0  # 10 to 500
     compressor_makeup_gain_db: float = 0.0  # 0 to +24
+    limiter_enabled: bool = False
 
 
 class DspPreProcessor:
@@ -98,6 +99,7 @@ class DspPreProcessor:
                 "dspCompAttack": self._params.comp_attack_ms,
                 "dspCompRelease": self._params.comp_release_ms,
                 "dspCompressorMakeupGain": self._params.compressor_makeup_gain_db,
+                "dspLimiterEnabled": self._params.limiter_enabled,
             }
 
     def update_params(self, updates: dict) -> dict:
@@ -115,6 +117,7 @@ class DspPreProcessor:
             "dspCompAttack": ("comp_attack_ms", float),
             "dspCompRelease": ("comp_release_ms", float),
             "dspCompressorMakeupGain": ("compressor_makeup_gain_db", float),
+            "dspLimiterEnabled": ("limiter_enabled", bool),
         }
 
         with self._lock:
@@ -216,5 +219,8 @@ class DspPreProcessor:
             pass 
 
         # Hard Limiter (Ceiling) to prevent digital distortion/clipping
-        x = np.clip(x, -0.99, 0.99)
+        if p.limiter_enabled:
+            x = np.clip(x, -0.99, 0.99)
+        else:
+            x = np.clip(x, -1.0, 1.0) # Absolute fallback to prevent NumPy overflow
         return x.astype(np.float32)
