@@ -215,6 +215,6 @@ class DspPreProcessor:
         if p.formant_shift_semitones != 0.0:
             pass 
 
-        # Prevent clipping
-        x = np.clip(x, -1.0, 1.0)
+        # Hard Limiter (Ceiling) to prevent digital distortion/clipping
+        x = np.clip(x, -0.99, 0.99)
         return x.astype(np.float32)

@@ -112,12 +112,21 @@ class Pipeline:
     def setPitchExtractor(self, pitchExtractor: PitchExtractor):
         self.pitchExtractor = pitchExtractor
 
-    def extract_pitch(self, audio: torch.Tensor, pitch: torch.Tensor | None, pitchf: torch.Tensor | None, f0_up_key: int, formant_shift: float) -> tuple[torch.Tensor, torch.Tensor]:
+    def extract_pitch(self, audio: torch.Tensor, pitch: torch.Tensor | None, pitchf: torch.Tensor | None, f0_up_key: int, formant_shift: float, f0_smoothing: int = 0) -> tuple[torch.Tensor, torch.Tensor]:
         f0 = self.pitchExtractor.extract(
             audio,
             HUBERT_SAMPLE_RATE,
             WINDOW_SIZE,
         )
+        
+        if f0_smoothing > 0:
+            import scipy.signal
+            window_length = f0_smoothing if f0_smoothing % 2 == 1 else f0_smoothing + 1
+            if window_length > 1 and len(f0) > window_length:
+                f0_np = f0.cpu().numpy()
+                f0_np = scipy.signal.medfilt(f0_np, window_length)
+                f0 = torch.from_numpy(f0_np).to(f0.device)
+
         f0 *= 2 ** ((f0_up_key - formant_shift) / 12)
 
         f0_mel = 1127.0 * torch.log(1.0 + f0 / 700.0)
@@ -168,6 +177,7 @@ class Pipeline:
         f0_up_key: int,
         formant_shift: float,
         index_rate: float,
+        f0_smoothing: int = 0,
         audio_feats_len: int,
         silence_front: int,
         embOutputLayer: int,
@@ -185,7 +195,7 @@ class Pipeline:
             t.record("pre-process")
 
             # ピッチ検出
-            pitch, pitchf = self.extract_pitch(audio[silence_front:], pitch, pitchf, f0_up_key, formant_shift) if self.use_f0 else (None, None)
+            pitch, pitchf = self.extract_pitch(audio[silence_front:], pitch, pitchf, f0_up_key, formant_shift, f0_smoothing) if self.use_f0 else (None, None)
             t.record("extract-pitch")
 
             # embedding

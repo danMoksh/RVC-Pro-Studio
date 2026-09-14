@@ -200,6 +200,7 @@ class RVCr2(VoiceChangerModel):
             self.settings.tran,
             self.settings.formantShift,
             self.settings.indexRatio,
+            self.settings.f0Smoothing,
             convert_feature_size_16k,
             0,
             self.slotInfo.embOutputLayer,
@@ -243,7 +244,8 @@ class RVCr2(VoiceChangerModel):
                 self.pitchf_buffer,
                 self.settings.tran,
                 self.settings.formantShift,
-                self.settings.indexRatio,
+            self.settings.indexRatio,
+            self.settings.f0Smoothing,
                 self.convert_feature_size_16k,
                 self.silence_front,
                 self.slotInfo.embOutputLayer,
@@ -264,6 +266,7 @@ class RVCr2(VoiceChangerModel):
             self.settings.tran,
             self.settings.formantShift,
             self.settings.indexRatio,
+            self.settings.f0Smoothing,
             self.convert_feature_size_16k,
             self.silence_front,
             self.slotInfo.embOutputLayer,
@@ -311,5 +314,9 @@ class RVCr2(VoiceChangerModel):
             {
                 "key": "defaultFormantShift",
                 "val": self.settings.formantShift,
+            },
+            {
+                "key": "defaultF0Smoothing",
+                "val": self.settings.f0Smoothing,
             },
         ]

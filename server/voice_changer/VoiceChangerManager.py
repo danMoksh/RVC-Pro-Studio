@@ -151,6 +151,7 @@ class VoiceChangerManager(ServerAudioCallbacks):
         self.settings.set_properties({
             'tran': slotInfo.defaultTune,
             'formantShift': slotInfo.defaultFormantShift,
+            'f0Smoothing': slotInfo.defaultF0Smoothing,
             'indexRatio': slotInfo.defaultIndexRatio,
             'protect': slotInfo.defaultProtect
         })

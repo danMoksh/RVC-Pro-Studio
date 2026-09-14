@@ -6,6 +6,7 @@ import { TuningArea } from "./101-1_TuningArea";
 import { IndexArea } from "./101-2_IndexArea";
 import { SpeakerArea } from "./101-3_SpeakerArea";
 import { FormantShiftArea } from "./101-4_FormantShiftArea";
+import { F0SmoothingArea } from "./101-5_F0SmoothingArea";
 import { Portrait } from "./101-0_Portrait";
 import { toast } from "react-toastify";
 
@@ -258,6 +259,7 @@ export const CharacterArea = (_props: CharacterAreaProps) => {
                 {gainControl}
                 <TuningArea />
                 <FormantShiftArea />
+                <F0SmoothingArea />
                 <IndexArea />
                 <SpeakerArea />
                 {modelSlotControl}

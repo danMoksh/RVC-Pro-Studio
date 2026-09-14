@@ -92,6 +92,7 @@ export const ServerSettingKey = {
 
     tran: "tran",
     formantShift: "formantShift",
+    f0Smoothing: "f0Smoothing",
     useONNX: "useONNX",
 
     silentThreshold: "silentThreshold",
@@ -141,6 +142,7 @@ export type VoiceChangerServerSetting = {
 
     tran: number;
     formantShift: number;
+    f0Smoothing: number;
     useONNX: number;
 
     silentThreshold: number;
@@ -273,6 +275,7 @@ export const DefaultServerSetting: ServerInfo = {
 
     tran: 0,
     formantShift: 0,
+    f0Smoothing: 0,
     useONNX: 0,
 
     silentThreshold: 0,
