@@ -252,6 +252,15 @@ export const PreProcessingArea = ({ serverUrl }: { serverUrl: string }) => {
                     min={0} max={24} step={0.5} value={params.dspCompressorMakeupGain} unit="dB"
                     onChange={(v) => enqueue("dspCompressorMakeupGain", v)}
                 />
+
+                {/* ── Limiter ── */}
+                <div className="config-sub-area-control-title">LIMITER</div>
+                <ToggleRow
+                    label="HARD LIMITER"
+                    tooltip="Strictly clamps audio at -0.99 to prevent the AI from hearing digital clipping when screaming. Can sound distorted if hit too hard."
+                    checked={params.dspLimiterEnabled}
+                    onChange={(v) => enqueue("dspLimiterEnabled", v)}
+                />
             </div>
         );
     }, [loaded, params, enqueue]);
