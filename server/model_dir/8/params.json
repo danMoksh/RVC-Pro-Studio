@@ -1,0 +1,31 @@
+{
+    "slotIndex": 8,
+    "voiceChangerType": "RVC",
+    "name": "s28_190e_12730s",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "s28_190e_12730s.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "",
+    "defaultTune": 9,
+    "defaultFormantShift": 0.2,
+    "defaultIndexRatio": 0.0,
+    "defaultProtect": 0.5,
+    "isONNX": false,
+    "modelType": "pyTorchRVCv2",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 32000,
+    "f0": true,
+    "embChannels": 768,
+    "embOutputLayer": 12,
+    "useFinalProj": false,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

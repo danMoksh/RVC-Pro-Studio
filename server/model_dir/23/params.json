@@ -1,0 +1,31 @@
+{
+    "slotIndex": 23,
+    "voiceChangerType": "RVC",
+    "name": "egirl",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "egirl.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "added_IVF2182_Flat_nprobe_1_egirl.index",
+    "defaultTune": 11,
+    "defaultFormantShift": 0.1,
+    "defaultIndexRatio": 0.1,
+    "defaultProtect": 0.5,
+    "isONNX": false,
+    "modelType": "pyTorchRVCv2",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 48000,
+    "f0": true,
+    "embChannels": 768,
+    "embOutputLayer": 12,
+    "useFinalProj": false,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

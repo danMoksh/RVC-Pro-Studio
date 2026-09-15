@@ -1,0 +1,31 @@
+{
+    "slotIndex": -1,
+    "voiceChangerType": "RVC",
+    "name": "Gura",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "Gura.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "added_IVF4130_Flat_nprobe_12.index",
+    "defaultTune": 0,
+    "defaultFormantShift": 0,
+    "defaultIndexRatio": 0,
+    "defaultProtect": 0.5,
+    "isONNX": false,
+    "modelType": "pyTorchRVC",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 40000,
+    "f0": true,
+    "embChannels": 256,
+    "embOutputLayer": 9,
+    "useFinalProj": true,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

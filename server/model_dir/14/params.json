@@ -1,0 +1,31 @@
+{
+    "slotIndex": -1,
+    "voiceChangerType": "RVC",
+    "name": "KLM63_Nell_V12_123e_77244s",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "KLM63_Nell_V12_123e_77244s.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "",
+    "defaultTune": 0,
+    "defaultFormantShift": 0,
+    "defaultIndexRatio": 0,
+    "defaultProtect": 0.5,
+    "isONNX": false,
+    "modelType": "pyTorchRVCv2",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 32000,
+    "f0": true,
+    "embChannels": 768,
+    "embOutputLayer": 12,
+    "useFinalProj": false,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

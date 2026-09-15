@@ -1,0 +1,31 @@
+{
+    "slotIndex": 6,
+    "voiceChangerType": "RVC",
+    "name": "FemaleV48k",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "FemaleV48k.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "added_IVF3693_Flat_nprobe_1_FemaleV48k_v2.index",
+    "defaultTune": 11,
+    "defaultFormantShift": 0.9,
+    "defaultIndexRatio": 0.2,
+    "defaultProtect": 0.5,
+    "isONNX": false,
+    "modelType": "pyTorchRVCv2",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 48000,
+    "f0": true,
+    "embChannels": 768,
+    "embOutputLayer": 12,
+    "useFinalProj": false,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

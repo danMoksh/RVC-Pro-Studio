@@ -1,0 +1,32 @@
+{
+    "slotIndex": 7,
+    "voiceChangerType": "RVC",
+    "name": "e-girl_e350_s42700",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "e-girl_e350_s42700.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "added_IVF1611_Flat_nprobe_1_e-girl_v2.index",
+    "defaultTune": 10,
+    "defaultFormantShift": 0.1,
+    "defaultF0Smoothing": 1,
+    "defaultIndexRatio": 0.2,
+    "defaultProtect": 0.4,
+    "isONNX": false,
+    "modelType": "pyTorchRVCv2",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 48000,
+    "f0": true,
+    "embChannels": 768,
+    "embOutputLayer": 12,
+    "useFinalProj": false,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

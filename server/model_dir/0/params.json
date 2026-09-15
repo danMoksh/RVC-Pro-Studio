@@ -1,0 +1,32 @@
+{
+    "slotIndex": 0,
+    "voiceChangerType": "RVC",
+    "name": "Seria Wynn",
+    "description": "",
+    "credit": "",
+    "termsOfUseUrl": "",
+    "iconFile": "",
+    "speakers": {
+        "0": "target"
+    },
+    "modelFile": "Seria Wynn.safetensors",
+    "modelFileOnnx": "",
+    "indexFile": "",
+    "defaultTune": 10,
+    "defaultFormantShift": 0.1,
+    "defaultF0Smoothing": 2,
+    "defaultIndexRatio": 0.0,
+    "defaultProtect": 0.3,
+    "isONNX": false,
+    "modelType": "pyTorchRVCv2",
+    "modelTypeOnnx": "onnxRVC",
+    "samplingRate": 32000,
+    "f0": true,
+    "embChannels": 768,
+    "embOutputLayer": 12,
+    "useFinalProj": false,
+    "deprecated": false,
+    "embedder": "hubert_base",
+    "sampleId": "",
+    "version": "v2"
+}

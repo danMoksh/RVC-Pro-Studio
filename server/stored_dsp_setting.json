@@ -1,16 +1,16 @@
 {
     "enabled": true,
     "preprocess_monitor": false,
-    "gate_threshold_db": -60.0,
+    "gate_threshold_db": -50.0,
     "gate_attack_ms": 2.0,
     "gate_release_ms": 150.0,
-    "highpass_cutoff_hz": 160.0,
-    "highshelf_cutoff_hz": 5000.0,
-    "highshelf_gain_db": 2.5,
-    "formant_shift_semitones": 0.0,
-    "compressor_threshold_db": -24.0,
+    "highpass_cutoff_hz": 100.0,
+    "highshelf_cutoff_hz": 6000.0,
+    "highshelf_gain_db": 6.0,
+    "compressor_threshold_db": -30.0,
     "compressor_ratio": 4.0,
-    "comp_attack_ms": 5.0,
-    "comp_release_ms": 50.0,
-    "compressor_makeup_gain_db": 3.5
+    "comp_attack_ms": 22.0,
+    "comp_release_ms": 100.0,
+    "compressor_makeup_gain_db": 3.0,
+    "limiter_enabled": false
 }
