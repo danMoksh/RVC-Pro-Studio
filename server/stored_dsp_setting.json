@@ -1,7 +1,7 @@
 {
     "enabled": true,
     "preprocess_monitor": false,
-    "gate_threshold_db": -50.0,
+    "gate_threshold_db": -58.0,
     "gate_attack_ms": 2.0,
     "gate_release_ms": 150.0,
     "highpass_cutoff_hz": 100.0,
