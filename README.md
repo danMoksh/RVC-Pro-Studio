@@ -17,6 +17,8 @@ feel free to fork this if you need other effects/plugins.
 *   **hard limiter:** added a limiter to prevent the audio from clipping and crashing the model on loud input.
 *   **ui & storage integration:** wired new dsp and smoothing sliders into the react frontend, with persistent json saving per-model.
 
+> **experimental branch:** there is also a [`feature-auto-pitch`](https://github.com/danMoksh/RVC-Pro-Studio/tree/feature-auto-pitch) branch where i implemented a dynamic auto-pitch algorithm and RMVPE noise gate. it's currently an experimental feature i was overengineering for fun, but feel free to switch to that branch and try it out!
+
 ---
 
 ## 🚀 quick start & installation
