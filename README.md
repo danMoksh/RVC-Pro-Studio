@@ -62,6 +62,23 @@ these settings affect how the vocoder interprets your voice.
 
 ---
 
+## 🤖 the auto pitch tuning guide [EXPERIMENTAL]
+this branch includes a dynamic pitch tracking algorithm that actively raises or lowers your pitch offset while you speak to keep your voice entirely inside the target model's "sweet spot", preventing squeaks and voice cracks on sudden pitch changes.
+
+*   **auto pitch (on/off):** enables the dynamic pitch tracker.
+*   **strength:** how strongly auto pitch overrides your manual `PITCH` slider.
+    *   `100%`: auto pitch takes total control. your manual pitch slider is ignored.
+    *   `50%`: auto pitch and your manual pitch slider blend perfectly together. 
+    *   `0%`: auto pitch is effectively off.
+*   **noise reject:** blocks loud, non-voice sounds (like chair squeaks or keyboard clacks) from throwing off the pitch tracker by checking RMVPE voice confidence. 
+    *   *recommendation:* `30%` is usually perfect.
+*   **min hz & max hz:** the target vocal range of the model you have selected. auto pitch will continuously bend your voice to fit inside this exact sweet spot.
+    *   *deep/low-pitched model:* `80hz` to `200hz`
+    *   *standard/high-pitched model:* `160hz` to `350hz`
+    *   *anime/cartoon model:* `250hz` to `500hz`
+
+---
+
 ## the "quiet speaker" dsp preset
 if you have a quiet voice and want a punchy voice without background noise bleeding through, use this setup:
 

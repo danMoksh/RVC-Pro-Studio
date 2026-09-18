@@ -56,7 +56,7 @@ export const AutoPitchArea = () => {
                     </div>
 
                     <div className="character-area-slider-control">
-                        <span className="character-area-slider-control-kind">STRENGTH</span>
+                        <span className="character-area-slider-control-kind"><a className="hint-text" data-tooltip-id="hint" data-tooltip-content="How much Auto Pitch overrides the manual slider. At 100%, manual pitch is ignored. At 50%, they blend.">STRENGTH</a></span>
                         <span className="character-area-slider-control-slider">
                             <input
                                 type="range"
@@ -71,7 +71,7 @@ export const AutoPitchArea = () => {
                     </div>
 
                     <div className="character-area-slider-control">
-                        <span className="character-area-slider-control-kind">NOISE REJECT</span>
+                        <span className="character-area-slider-control-kind"><a className="hint-text" data-tooltip-id="hint" data-tooltip-content="Confidence threshold to ignore non-voice sounds. If RMVPE confidence drops below this %, pitch freezes.">NOISE REJECT</a></span>
                         <span className="character-area-slider-control-slider">
                             <input
                                 type="range"
@@ -86,7 +86,7 @@ export const AutoPitchArea = () => {
                     </div>
 
                     <div className="character-area-slider-control">
-                        <span className="character-area-slider-control-kind">MIN HZ</span>
+                        <span className="character-area-slider-control-kind"><a className="hint-text" data-tooltip-id="hint" data-tooltip-content="The lowest comfortable pitch for this model. Deep model ~80Hz, high model ~160Hz, anime ~250Hz.">MIN HZ</a></span>
                         <span className="character-area-slider-control-slider">
                             <input
                                 type="range"
@@ -101,7 +101,7 @@ export const AutoPitchArea = () => {
                     </div>
 
                     <div className="character-area-slider-control">
-                        <span className="character-area-slider-control-kind">MAX HZ</span>
+                        <span className="character-area-slider-control-kind"><a className="hint-text" data-tooltip-id="hint" data-tooltip-content="The highest comfortable pitch for this model. Deep model ~200Hz, high model ~350Hz, anime ~500Hz.">MAX HZ</a></span>
                         <span className="character-area-slider-control-slider">
                             <input
                                 type="range"
