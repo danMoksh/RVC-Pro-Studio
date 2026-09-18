@@ -1,7 +1,9 @@
 # RVC-Pro-Studio
 > **python 3.10+ | tested on linux fedora (gnome)**
 
-![rvc-pro-studio full ui](put-your-screenshot-link-here.png)
+<p align="center">
+  <img src="screenshot.png" alt="rvc-pro-studio full ui" width="750">
+</p>
 
 this fork adds built-in dsp so you don't need a separate daw (like fl studio or reaper) or virtual audio cables to clean your mic audio before rvc inference.
 
