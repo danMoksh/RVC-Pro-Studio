@@ -378,3 +378,23 @@ class RMVPE:
         mel: torch.Tensor = self.mel_extractor(audio.unsqueeze(0), center=True)
         hidden = self.mel2hidden(mel)
         return self.decode(hidden, threshold)
+
+    def decode_with_confidence(self, hidden: torch.Tensor, threshold: float):
+        center = torch.argmax(hidden, dim=2, keepdim=True)  # [B, T, 1]
+        start = torch.clip(center - 4, min=0)  # [B, T, 1]
+        end = torch.clip(center + 5, max=360)  # [B, T, 1]
+        idx_mask = (self.idx >= start) & (self.idx < end)  # [B, T, N]
+        weights = hidden * idx_mask  # [B, T, N]
+        product_sum = torch.sum(weights * self.idx_cents, dim=2)  # [B, T]
+        weight_sum = torch.sum(weights, dim=2)  # [B, T]
+        cents = product_sum / (weight_sum + (weight_sum == 0))  # avoid dividing by zero, [B, T]
+        f0 = 10 * 2 ** (cents / 1200)
+        confidence = hidden.max(dim=2)[0]  # [B, T]
+        uv = confidence < threshold  # [B, T]
+        return f0 * ~uv, confidence
+
+    @torch.no_grad()
+    def infer_from_audio_t_with_confidence(self, audio: torch.Tensor, threshold: float = 0.05) -> tuple[torch.Tensor, torch.Tensor]:
+        mel: torch.Tensor = self.mel_extractor(audio.unsqueeze(0), center=True)
+        hidden = self.mel2hidden(mel)
+        return self.decode_with_confidence(hidden, threshold)

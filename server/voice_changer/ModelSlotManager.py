@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 class ModelSlotManager:
     _instance = None
 
+    import threading
+    _lock = threading.Lock()
+    
     def __init__(self, model_dir: str):
         self.model_dir = model_dir
         self.modelSlots = loadAllSlotInfo(self.model_dir)
@@ -23,16 +26,19 @@ class ModelSlotManager:
         return cls._instance
 
     def _save_model_slot(self, slotIndex: int, slotInfo: ModelSlots):
-        saveSlotInfo(self.model_dir, slotIndex, slotInfo)
-        self.modelSlots = loadAllSlotInfo(self.model_dir)
+        with self._lock:
+            saveSlotInfo(self.model_dir, slotIndex, slotInfo)
+            self.modelSlots = loadAllSlotInfo(self.model_dir)
 
     def _load_model_slot(self, slotIndex: int):
-        return self.modelSlots[slotIndex]
+        with self._lock:
+            return self.modelSlots[slotIndex]
 
     def getAllSlotInfo(self, reload: bool = False):
-        if reload:
-            self.modelSlots = loadAllSlotInfo(self.model_dir)
-        return self.modelSlots
+        with self._lock:
+            if reload:
+                self.modelSlots = loadAllSlotInfo(self.model_dir)
+            return self.modelSlots
 
     def get_slot_info(self, slotIndex: int):
         if slotIndex == -1:
@@ -47,6 +53,8 @@ class ModelSlotManager:
         slotInfo = self._load_model_slot(slot_index)
         if key == "speakers":
             setattr(slotInfo, key, json.loads(val))
+        elif key in ["autoPitchMinHz", "autoPitchMaxHz"]:
+            setattr(slotInfo, key, float(val))
         else:
             setattr(slotInfo, key, val)
         self._save_model_slot(slot_index, slotInfo)

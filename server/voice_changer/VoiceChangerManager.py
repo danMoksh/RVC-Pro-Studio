@@ -273,7 +273,9 @@ class VoiceChangerManager(ServerAudioCallbacks):
 
     def update_model_info(self, newData: str):
         # self.vc.update_model_info(newData)
-        self.modelSlotManager.update_model_info(newData)
+        import json
+        parsed = json.loads(newData)
+        self.modelSlotManager.update_model_info(int(parsed["slot"]), parsed["key"], parsed["val"])
         return self.get_info()
 
     def upload_model_assets(self, params: str):

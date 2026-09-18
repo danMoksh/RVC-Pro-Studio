@@ -405,3 +405,32 @@ class VoiceChangerSettings:
     @silenceFront.setter
     def silenceFront(self, enable: str):
         self._silenceFront = int(enable)
+
+    # Auto Pitch settings
+    _autoPitchEnabled: int = 0
+    _autoPitchStrength: float = 0.5
+    _autoPitchNoiseGate: float = 0.3
+
+    @property
+    def autoPitchEnabled(self):
+        return self._autoPitchEnabled
+
+    @autoPitchEnabled.setter
+    def autoPitchEnabled(self, enabled: str):
+        self._autoPitchEnabled = int(enabled)
+
+    @property
+    def autoPitchStrength(self):
+        return self._autoPitchStrength
+
+    @autoPitchStrength.setter
+    def autoPitchStrength(self, strength: str):
+        self._autoPitchStrength = float(strength)
+
+    @property
+    def autoPitchNoiseGate(self):
+        return self._autoPitchNoiseGate
+
+    @autoPitchNoiseGate.setter
+    def autoPitchNoiseGate(self, noise_gate: str):
+        self._autoPitchNoiseGate = float(noise_gate)

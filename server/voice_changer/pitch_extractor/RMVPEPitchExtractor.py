@@ -21,3 +21,12 @@ class RMVPEPitchExtractor(PitchExtractor):
         window: int,
     ) -> torch.Tensor:
         return self.rmvpe.infer_from_audio_t(audio).squeeze()
+
+    def extract_with_confidence(
+        self,
+        audio: torch.Tensor,
+        sr: int,
+        window: int,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        f0, confidence = self.rmvpe.infer_from_audio_t_with_confidence(audio)
+        return f0.squeeze(), confidence.squeeze()

@@ -18,6 +18,8 @@ class ModelSlot:
     termsOfUseUrl: str = ""
     iconFile: str = ""
     speakers: dict = field(default_factory=lambda: {})
+    autoPitchMinHz: float = 0.0
+    autoPitchMaxHz: float = 0.0
 
 
 @dataclass

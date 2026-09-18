@@ -75,6 +75,7 @@ class Pipeline:
         self.model_window = model_sr // 100
 
         self.dtype = torch.float16 if self.is_half else torch.float32
+        self._ap_last_good_f0: torch.Tensor | None = None
 
         self.resamplers = {}
 
@@ -112,12 +113,41 @@ class Pipeline:
     def setPitchExtractor(self, pitchExtractor: PitchExtractor):
         self.pitchExtractor = pitchExtractor
 
-    def extract_pitch(self, audio: torch.Tensor, pitch: torch.Tensor | None, pitchf: torch.Tensor | None, f0_up_key: int, formant_shift: float, f0_smoothing: int = 0) -> tuple[torch.Tensor, torch.Tensor]:
-        f0 = self.pitchExtractor.extract(
-            audio,
-            HUBERT_SAMPLE_RATE,
-            WINDOW_SIZE,
-        )
+    def extract_pitch(
+        self,
+        audio: torch.Tensor,
+        pitch: torch.Tensor | None,
+        pitchf: torch.Tensor | None,
+        f0_up_key: int,
+        formant_shift: float,
+        f0_smoothing: int = 0,
+        auto_pitch_enabled: bool = False,
+        auto_pitch_min_hz: float = 80.0,
+        auto_pitch_max_hz: float = 400.0,
+        auto_pitch_strength: float = 0.5,
+        noise_gate_confidence: float = 0.3,
+    ) -> tuple[torch.Tensor, torch.Tensor]:
+        if auto_pitch_enabled and hasattr(self.pitchExtractor, 'extract_with_confidence'):
+            f0, confidence = self.pitchExtractor.extract_with_confidence(
+                audio, HUBERT_SAMPLE_RATE, WINDOW_SIZE
+            )
+        else:
+            f0 = self.pitchExtractor.extract(
+                audio, HUBERT_SAMPLE_RATE, WINDOW_SIZE
+            )
+            confidence = None
+            
+        if auto_pitch_enabled:
+            if confidence is not None:
+                voiced_mask = confidence > noise_gate_confidence
+            else:
+                voiced_mask = f0 > 0
+            
+            if hasattr(self, '_ap_last_good_f0') and self._ap_last_good_f0 is not None:
+                f0 = torch.where(voiced_mask, f0, self._ap_last_good_f0)
+            voiced_f0 = f0[voiced_mask & (f0 > 0)]
+            if len(voiced_f0) > 0:
+                self._ap_last_good_f0 = voiced_f0[-1].detach()
         
         if f0_smoothing > 0:
             import scipy.signal
@@ -127,7 +157,20 @@ class Pipeline:
                 f0_np = scipy.signal.medfilt(f0_np, window_length)
                 f0 = torch.from_numpy(f0_np).to(f0.device)
 
-        f0 *= 2 ** ((f0_up_key - formant_shift) / 12)
+        if auto_pitch_enabled:
+            voiced = f0[(f0 > auto_pitch_min_hz) & (f0 < auto_pitch_max_hz)]
+            if len(voiced) > 0:
+                current_median = voiced.median().item()
+                target_center = (auto_pitch_min_hz + auto_pitch_max_hz) / 2.0
+                import numpy as np
+                ideal_shift = 12 * np.log2(target_center / current_median) if current_median > 0 else 0
+                dynamic_shift = (1 - auto_pitch_strength) * f0_up_key + auto_pitch_strength * ideal_shift
+            else:
+                dynamic_shift = f0_up_key
+        else:
+            dynamic_shift = f0_up_key
+
+        f0 *= 2 ** ((dynamic_shift - formant_shift) / 12)
 
         f0_mel = 1127.0 * torch.log(1.0 + f0 / 700.0)
         f0_mel = torch.clip(
@@ -185,6 +228,11 @@ class Pipeline:
         skip_head: int,
         return_length: int,
         protect: float = 0.5,
+        auto_pitch_enabled: bool = False,
+        auto_pitch_min_hz: float = 80.0,
+        auto_pitch_max_hz: float = 400.0,
+        auto_pitch_strength: float = 0.5,
+        noise_gate_confidence: float = 0.3,
     ) -> torch.Tensor:
         with Timer2("Pipeline-Exec", False) as t:  # NOQA
             # 16000のサンプリングレートで入ってきている。以降この世界は16000で処理。
@@ -195,7 +243,11 @@ class Pipeline:
             t.record("pre-process")
 
             # ピッチ検出
-            pitch, pitchf = self.extract_pitch(audio[silence_front:], pitch, pitchf, f0_up_key, formant_shift, f0_smoothing) if self.use_f0 else (None, None)
+            pitch, pitchf = self.extract_pitch(
+                audio[silence_front:], pitch, pitchf, f0_up_key, formant_shift, f0_smoothing,
+                auto_pitch_enabled, auto_pitch_min_hz, auto_pitch_max_hz,
+                auto_pitch_strength, noise_gate_confidence
+            ) if self.use_f0 else (None, None)
             t.record("extract-pitch")
 
             # embedding

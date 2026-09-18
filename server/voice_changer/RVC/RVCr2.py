@@ -208,6 +208,11 @@ class RVCr2(VoiceChangerModel):
             0,
             convert_feature_size_16k,
             self.settings.protect,
+            auto_pitch_enabled=bool(self.settings.autoPitchEnabled),
+            auto_pitch_min_hz=self.slotInfo.autoPitchMinHz if self.slotInfo.autoPitchMinHz > 0 else 80.0,
+            auto_pitch_max_hz=self.slotInfo.autoPitchMaxHz if self.slotInfo.autoPitchMaxHz > 0 else 400.0,
+            auto_pitch_strength=self.settings.autoPitchStrength,
+            noise_gate_confidence=self.settings.autoPitchNoiseGate,
         )
 
         # TODO: Need to handle resampling for individual files
@@ -253,6 +258,11 @@ class RVCr2(VoiceChangerModel):
                 self.skip_head,
                 self.return_length,
                 self.settings.protect,
+                auto_pitch_enabled=bool(self.settings.autoPitchEnabled),
+                auto_pitch_min_hz=self.slotInfo.autoPitchMinHz if self.slotInfo.autoPitchMinHz > 0 else 80.0,
+                auto_pitch_max_hz=self.slotInfo.autoPitchMaxHz if self.slotInfo.autoPitchMaxHz > 0 else 400.0,
+                auto_pitch_strength=self.settings.autoPitchStrength,
+                noise_gate_confidence=self.settings.autoPitchNoiseGate,
             )
             return None, vol
 
@@ -274,6 +284,11 @@ class RVCr2(VoiceChangerModel):
             self.skip_head,
             self.return_length,
             self.settings.protect,
+            auto_pitch_enabled=bool(self.settings.autoPitchEnabled),
+            auto_pitch_min_hz=self.slotInfo.autoPitchMinHz if self.slotInfo.autoPitchMinHz > 0 else 80.0,
+            auto_pitch_max_hz=self.slotInfo.autoPitchMaxHz if self.slotInfo.autoPitchMaxHz > 0 else 400.0,
+            auto_pitch_strength=self.settings.autoPitchStrength,
+            noise_gate_confidence=self.settings.autoPitchNoiseGate,
         )
 
         # FIXME: Why the heck does it require another sqrt to amplify the volume?

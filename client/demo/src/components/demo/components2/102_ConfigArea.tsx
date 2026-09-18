@@ -5,6 +5,7 @@ import { DeviceArea } from "./102-3_DeviceArea"
 import { RecorderArea } from "./102-4_RecorderArea"
 import { MoreActionArea } from "./102-5_MoreActionArea"
 import { PreProcessingArea } from "./102-6_PreProcessingArea"
+import { AutoPitchArea } from "./102-7_AutoPitchArea"
 import { useAppState } from "../../../001_provider/001_AppStateProvider"
 
 export type ConfigAreaProps = {
@@ -25,6 +26,7 @@ export const ConfigArea = (props: ConfigAreaProps) => {
                     <ConvertArea inputChunkNums={props.inputChunkNums}></ConvertArea>
                 </div>
                 <div className="config-area">
+                    <AutoPitchArea></AutoPitchArea>
                     <PreProcessingArea serverUrl={serverUrl}></PreProcessingArea>
                 </div>
                 <div className="config-area">

@@ -107,6 +107,9 @@ export const ServerSettingKey = {
     modelSlotIndex: "modelSlotIndex",
 
     inputSampleRate: "inputSampleRate",
+    autoPitchEnabled: "autoPitchEnabled",
+    autoPitchStrength: "autoPitchStrength",
+    autoPitchNoiseGate: "autoPitchNoiseGate",
 } as const;
 export type ServerSettingKey = (typeof ServerSettingKey)[keyof typeof ServerSettingKey];
 
@@ -157,6 +160,10 @@ export type VoiceChangerServerSetting = {
     modelSlotIndex: number;
 
     inputSampleRate: InputSampleRate;
+
+    autoPitchEnabled: number;
+    autoPitchStrength: number;
+    autoPitchNoiseGate: number;
 };
 
 type ModelSlot = {
@@ -288,6 +295,9 @@ export const DefaultServerSetting: ServerInfo = {
     forceFp32: 0,
     disableJit: 0,
     modelSlotIndex: 0,
+    autoPitchEnabled: 0,
+    autoPitchStrength: 0.5,
+    autoPitchNoiseGate: 0.3,
     sampleModels: [],
     gpus: [],
 
